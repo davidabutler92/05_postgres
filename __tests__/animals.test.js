@@ -51,4 +51,18 @@ describe('animals routes', () => {
     expect(res.body).toEqual(animal);
   });
 
+  it('should update a animal using PUT', async() => {
+    const animal = await Animal.insert({ color: 'brown', type: 'bear' });
+
+    const res = await request(app)
+      .put(`/api/v1/animals/${animal.id}`)
+      .send({ color: 'brown', type: 'snake' });
+
+    expect(res.body).toEqual({ 
+      id: animal.id,
+      color: 'brown',
+      type: 'snake'
+    });
+  });
+
 });
