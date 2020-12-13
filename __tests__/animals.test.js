@@ -28,7 +28,7 @@ describe('animals routes', () => {
     });
   }); 
   
-it('shoud get all animals', async() => {
+  it('shoud get all animals', async() => {
     const animals = await Promise.all([
       { color: 'brown', type: 'bear' },
       { color: 'blue', type: 'whale' },
@@ -40,6 +40,15 @@ it('shoud get all animals', async() => {
     
     expect(res.body).toEqual(expect.arrayContaining(animals));
     expect(res.body).toHaveLength(animals.length);
-});
+  });
+
+  it('finds a animal by id', async() => {
+    const animal = await Animal.insert({ color: 'red', type: 'bear' });
+
+    const res = await request(app)
+      .get(`/api/v1/animals/${animal.id}`);
+
+    expect(res.body).toEqual(animal);
+  });
 
 });
