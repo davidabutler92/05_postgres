@@ -65,6 +65,13 @@ describe('animals routes', () => {
     });
   });
 
-  
+  it('should delete a comment by id', async() => {
+    const animal = await Animal.insert({ color: 'brown', type: 'bear' });
+
+    const res = await request(app)
+      .delete(`/api/v1/animals/${animal.id}`);
+
+    expect(res.body).toEqual(animal);
+  });
 
 });
